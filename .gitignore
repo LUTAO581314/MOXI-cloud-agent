@@ -1,0 +1,10 @@
+.env
+*.env
+*.pem
+*.key
+*.crt
+*.log
+dist/
+build/
+tmp/
+node_modules/
