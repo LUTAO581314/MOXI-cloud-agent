@@ -9,11 +9,11 @@ and supports Hermes deployments.
 
 ## Current Decision
 
-The repository may be rebuilt from source according to the current commercial
-plan. Existing Bairui prototype code under `bairui-platform/` is treated as
-reference material, not as the final product boundary.
+The repository is being rebuilt from source according to the current commercial
+plan. Historical prototype code has been removed from the active tree.
+Future code must follow the boundaries in this README and `docs/`.
 
-Keep or migrate only what helps the new platform:
+The old prototype taught useful lessons:
 
 - user registration and login;
 - plan and subscription models;
@@ -24,13 +24,8 @@ Keep or migrate only what helps the new platform:
 - local agent prototype ideas;
 - Docker Compose development pattern.
 
-Replace or redesign:
-
-- Bairui branding;
-- assistant-hosting-first positioning;
-- old docs that make Hermes only one optional runtime;
-- route names that do not match MOXI commercial delivery;
-- any demo-only flow that cannot become customer delivery.
+Those ideas may be reimplemented in the new codebase, but the old product
+boundary is no longer active.
 
 ## Product Role
 
@@ -99,12 +94,7 @@ MOXI-cloud-agent/
     01-server-management-plan.md
     02-license-and-deployment-flow.md
     03-hermes-platform-contract.md
-  legacy/
-    bairui-platform/     # optional migration target if we archive old code
 ```
-
-The current `bairui-platform/` directory can either be migrated gradually or
-archived before a clean rebuild.
 
 ## Recommended Technical Direction
 
@@ -131,36 +121,20 @@ Server management:
 - diagnostic bundle upload only after customer action;
 - no customer business data uploaded by default.
 
-The existing Django prototype may still be useful if we decide speed is more
-important than frontend velocity, but the recommended long-term customer
-platform is a typed web platform with a strong UI and deployment wizard.
+## Documentation
 
-## Existing Prototype Inventory
-
-Existing useful code:
-
-- `bairui-platform/` Django + DRF backend;
-- user/password and email-code login;
-- plan, subscription, quota, storage, task, log, and memory models;
-- device pairing API;
-- WebSocket heartbeat endpoint;
-- local CLI agent prototype;
-- Docker Compose for Postgres, Redis, web, and worker.
-
-Existing docs:
-
-- [Server Agent Architecture](docs/architecture.md)
-- [Security Boundary](docs/security.md)
-- [Roadmap](docs/roadmap.md)
 - [Commercial Platform Rebuild Plan](docs/00-platform-rebuild-plan.md)
 - [Server Management Plan](docs/01-server-management-plan.md)
+- [License And Deployment Flow](docs/02-license-and-deployment-flow.md)
+- [Hermes Platform Contract](docs/03-hermes-platform-contract.md)
+- [Repository Cleanup Policy](docs/04-repository-cleanup-policy.md)
 
 ## Immediate Next Steps
 
-1. Decide whether to archive `bairui-platform/` or migrate pieces from it.
-2. Create the new platform skeleton.
-3. Build license, customer organization, server registration, and deployment
+1. Create the new platform skeleton under `apps/web`.
+2. Build license, customer organization, server registration, and deployment
    wizard first.
-4. Keep Hermes as a separate deployable product.
-5. Add server heartbeat contract between Hermes/customer VM and platform.
+3. Keep Hermes as a separate deployable product.
+4. Add server heartbeat contract between Hermes/customer VM and platform.
+5. Implement the server agent from the white-listed action model.
 6. Prepare the first customer trial flow before adding full online payment.

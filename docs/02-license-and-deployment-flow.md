@@ -1,0 +1,77 @@
+# License And Deployment Flow
+
+This document defines the commercial license and deployment flow between
+MOXI-cloud-agent and Hermes.
+
+## 1. Flow
+
+```text
+Customer signs up
+  -> chooses plan
+  -> platform creates organization
+  -> platform creates license
+  -> customer creates server record
+  -> platform generates deployment instructions
+  -> customer deploys Hermes on VPS / VM
+  -> Hermes validates license locally
+  -> Hermes reports health summary
+  -> platform shows server status
+```
+
+## 2. License Fields
+
+Required fields:
+
+- license_id;
+- organization_id;
+- plan_code;
+- features;
+- limits;
+- issued_at;
+- expires_at;
+- deployment_mode;
+- signature.
+
+Optional fields:
+
+- customer_name;
+- allowed_server_count;
+- release_channel;
+- support_level.
+
+Forbidden fields:
+
+- API keys;
+- connector tokens;
+- passwords;
+- private keys;
+- chat content;
+- Obsidian note content.
+
+## 3. Deployment Modes
+
+Supported commercial modes:
+
+- local production;
+- customer VPS;
+- customer VM;
+- managed VM;
+- enterprise dedicated server.
+
+The default paid deployment path is:
+
+```text
+VPS / VM -> Docker Compose -> Hermes -> health summary -> platform
+```
+
+## 4. First Version
+
+The first commercial version can be semi-manual:
+
+- platform generates license;
+- platform generates deployment command;
+- customer or MOXI operator runs deployment;
+- server is registered manually;
+- health is checked automatically.
+
+Full automatic provisioning should come after the first real customer trials.
