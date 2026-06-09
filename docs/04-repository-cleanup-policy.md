@@ -39,6 +39,8 @@ Hermes belongs in `hermes-`. This repository integrates with Hermes through
 licenses, server registration, deployment templates, health summaries, release
 metadata, and support workflows.
 
+Customer-facing brand, trademark, and logo fields must default to `bairui`.
+
 ## 4. Commercial Readiness Rule
 
 A feature is not commercially ready until it has:

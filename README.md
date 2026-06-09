@@ -1,7 +1,7 @@
 # MOXI Cloud Agent
 
 MOXI Cloud Agent is the commercial website, customer platform, and server
-management control plane for MOXI Agent OS.
+management control plane for the bairui Agent OS product line.
 
 This repository is not the Hermes runtime. Hermes remains the customer-side
 Agent OS product kernel. This repository sells, delivers, licenses, monitors,
@@ -12,6 +12,12 @@ and supports Hermes deployments.
 The repository is being rebuilt from source according to the current commercial
 plan. Historical prototype code has been removed from the active tree.
 Future code must follow the boundaries in this README and `docs/`.
+
+Default customer-facing brand fields:
+
+- brand key: `bairui`;
+- trademark name: `bairui`;
+- logo text: `bairui`.
 
 The old prototype taught useful lessons:
 
