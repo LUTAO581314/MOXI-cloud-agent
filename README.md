@@ -135,6 +135,18 @@ Server management:
 - [Hermes Platform Contract](docs/03-hermes-platform-contract.md)
 - [Repository Cleanup Policy](docs/04-repository-cleanup-policy.md)
 
+## P0 Platform Deployment
+
+Run the local deployment check:
+
+```sh
+sh infra/platform/scripts/deploy-platform.sh
+```
+
+For production, copy `infra/platform/env.example` to a protected server path
+such as `/etc/bairui/platform.env`, set real values, then run the script with
+`BAIRUI_INSTALL_SYSTEMD=1` as root to install the systemd service.
+
 ## Immediate Next Steps
 
 1. Create the new platform skeleton under `apps/web`.

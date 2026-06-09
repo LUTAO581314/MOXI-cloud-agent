@@ -75,3 +75,16 @@ The first commercial version can be semi-manual:
 - health is checked automatically.
 
 Full automatic provisioning should come after the first real customer trials.
+
+## 5. Platform Deployment Command
+
+The platform repository now has a P0 deployment script:
+
+```sh
+sh infra/platform/scripts/deploy-platform.sh
+```
+
+It installs Node dependencies, optionally runs `npm run db:migrate` when
+`BAIRUI_PLATFORM_DATABASE_URL` is configured, runs tests, and prepares the
+systemd unit template. Set `BAIRUI_INSTALL_SYSTEMD=1` on a prepared Linux server
+to install and restart the `bairui-platform` service.

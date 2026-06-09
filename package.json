@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "node --test",
+    "deploy:check": "node --test infra/platform/scripts/check-deploy-assets.mjs",
     "db:migrate": "node packages/db/bin/migrate.mjs",
     "db:migration:print": "node packages/db/bin/print-migration.mjs",
     "platform:dev": "node apps/web/server.mjs",
