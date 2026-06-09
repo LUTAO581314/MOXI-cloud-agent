@@ -39,8 +39,10 @@ Endpoints:
 Environment variables:
 
 - `BAIRUI_PLATFORM_PORT`: local API port, default `8788`.
+- `BAIRUI_PLATFORM_DATABASE_URL`: PostgreSQL connection string. When set, the
+  API uses PostgreSQL storage.
 - `BAIRUI_SERVER_REGISTRY_PATH`: local JSON registry path, default
-  `./data/platform/server-registry.json`.
+  `./data/platform/server-registry.json`. Used when database URL is missing.
 - `BAIRUI_SERVER_AGENT_TOKEN`: optional bearer token required for heartbeat
   ingestion when set.
 
@@ -50,5 +52,6 @@ Run locally:
 npm run platform:dev
 ```
 
-This is a P0 local registry. PostgreSQL remains the commercial target for
-production storage.
+The API keeps a JSON fallback for local development. Commercial deployments
+should set `BAIRUI_PLATFORM_DATABASE_URL` and run the PostgreSQL migration from
+`packages/db`.

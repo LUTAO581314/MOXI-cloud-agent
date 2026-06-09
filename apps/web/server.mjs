@@ -1,5 +1,6 @@
 import http from "node:http";
-import { isAuthorized, listServers, loadRegistryConfig, recordHeartbeat } from "./server-registry.mjs";
+import { isAuthorized, loadRegistryConfig } from "./server-registry.mjs";
+import { createRegistryStorage } from "./storage.mjs";
 
 function jsonResponse(response, status, payload) {
   const body = JSON.stringify(payload);
@@ -21,7 +22,7 @@ async function readJson(request) {
   return JSON.parse(Buffer.concat(chunks).toString("utf8"));
 }
 
-export function createPlatformServer(config = loadRegistryConfig()) {
+export function createPlatformServer(config = loadRegistryConfig(), storagePromise = createRegistryStorage(config)) {
   return http.createServer(async (request, response) => {
     try {
       const url = new URL(request.url, "http://127.0.0.1");
@@ -31,19 +32,21 @@ export function createPlatformServer(config = loadRegistryConfig()) {
         return;
       }
 
+      const storage = await storagePromise;
+
       if (request.method === "POST" && url.pathname === "/api/server-heartbeat") {
         if (!isAuthorized(request.headers, config)) {
           jsonResponse(response, 401, { error: "unauthorized" });
           return;
         }
         const payload = await readJson(request);
-        const result = await recordHeartbeat(payload.heartbeat ?? payload, { registryPath: config.registryPath });
+        const result = await storage.recordHeartbeat(payload.heartbeat ?? payload);
         jsonResponse(response, result.status, result.accepted ? { accepted: true, server: result.server } : { accepted: false, errors: result.errors });
         return;
       }
 
       if (request.method === "GET" && url.pathname === "/api/servers") {
-        jsonResponse(response, 200, { servers: await listServers({ registryPath: config.registryPath }) });
+        jsonResponse(response, 200, { servers: await storage.listServers() });
         return;
       }
 

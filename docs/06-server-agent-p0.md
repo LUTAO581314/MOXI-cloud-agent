@@ -82,4 +82,5 @@ The PostgreSQL target schema lives in `packages/db/schema.mjs` and starts with:
 - `server_heartbeats`
 
 The JSON registry remains a local development fallback. Commercial deployments
-should use PostgreSQL once the platform storage adapter is connected.
+should set `BAIRUI_PLATFORM_DATABASE_URL` so `apps/web` uses the PostgreSQL
+storage adapter.

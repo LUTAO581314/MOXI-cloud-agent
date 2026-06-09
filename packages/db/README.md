@@ -48,5 +48,5 @@ server-agent
   -> append server_heartbeats
 ```
 
-The current `apps/web` API still keeps a JSON registry for local P0 testing.
-The SQL schema is the target for the next storage adapter.
+The `apps/web` API uses PostgreSQL when `BAIRUI_PLATFORM_DATABASE_URL` is set
+and falls back to JSON registry storage for local development.

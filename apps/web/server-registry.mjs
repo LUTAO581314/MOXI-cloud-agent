@@ -6,6 +6,7 @@ const DEFAULT_REGISTRY_PATH = "./data/platform/server-registry.json";
 
 export function loadRegistryConfig(env = process.env) {
   return {
+    databaseUrl: env.BAIRUI_PLATFORM_DATABASE_URL ?? "",
     registryPath: env.BAIRUI_SERVER_REGISTRY_PATH ?? DEFAULT_REGISTRY_PATH,
     agentToken: env.BAIRUI_SERVER_AGENT_TOKEN ?? ""
   };
@@ -85,4 +86,19 @@ export function isAuthorized(headers, config) {
     return true;
   }
   return headers.authorization === `Bearer ${config.agentToken}`;
+}
+
+export function createJsonRegistryStorage(options = {}) {
+  return {
+    kind: "json",
+    async recordHeartbeat(heartbeat, recordOptions = {}) {
+      return recordHeartbeat(heartbeat, {
+        registryPath: options.registryPath,
+        ...recordOptions
+      });
+    },
+    async listServers() {
+      return listServers({ registryPath: options.registryPath });
+    }
+  };
 }
