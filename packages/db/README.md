@@ -38,6 +38,12 @@ Print the migration SQL:
 npm run db:migration:print
 ```
 
+Run the migration against PostgreSQL:
+
+```sh
+BAIRUI_PLATFORM_DATABASE_URL=postgres://user:pass@host:5432/bairui npm run db:migrate
+```
+
 The first production path is:
 
 ```text

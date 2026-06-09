@@ -55,3 +55,9 @@ npm run platform:dev
 The API keeps a JSON fallback for local development. Commercial deployments
 should set `BAIRUI_PLATFORM_DATABASE_URL` and run the PostgreSQL migration from
 `packages/db`.
+
+Initialize PostgreSQL before starting the platform API:
+
+```sh
+npm run db:migrate
+```

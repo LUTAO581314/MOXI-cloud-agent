@@ -84,3 +84,9 @@ The PostgreSQL target schema lives in `packages/db/schema.mjs` and starts with:
 The JSON registry remains a local development fallback. Commercial deployments
 should set `BAIRUI_PLATFORM_DATABASE_URL` so `apps/web` uses the PostgreSQL
 storage adapter.
+
+Run this before starting the production platform API:
+
+```sh
+npm run db:migrate
+```
