@@ -58,3 +58,16 @@ This P0 agent is enough for:
 
 Remote maintenance actions must remain future work and must use explicit
 white-listed commands, approval, audit logging, and customer-visible status.
+
+## 6. Platform Receive API
+
+The first receive endpoint lives in `apps/web/server.mjs`:
+
+```text
+POST /api/server-heartbeat
+GET  /api/servers
+```
+
+For P0, the registry is stored as local JSON through
+`apps/web/server-registry.mjs`. This keeps the protocol testable before the
+PostgreSQL schema and migrations are introduced.

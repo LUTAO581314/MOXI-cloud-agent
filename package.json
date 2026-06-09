@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "platform:dev": "node apps/web/server.mjs",
     "server-agent:once": "node server-agent/index.mjs",
     "license:generate": "node packages/license/bin/generate-license.mjs"
   }
