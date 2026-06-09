@@ -1,86 +1,166 @@
-﻿# MOXI Cloud Agent
+# MOXI Cloud Agent
 
-## Bairui Cloud Agent Platform
+MOXI Cloud Agent is the commercial website, customer platform, and server
+management control plane for MOXI Agent OS.
 
-This repository now also contains the first commercial platform prototype under `bairui-platform/`.
+This repository is not the Hermes runtime. Hermes remains the customer-side
+Agent OS product kernel. This repository sells, delivers, licenses, monitors,
+and supports Hermes deployments.
 
-The platform currently includes:
+## Current Decision
 
-- Django + DRF backend
-- user/password login and SMTP email-code login
-- assistant creation and provision approval flow
-- plan, subscription, quota, storage, files, memory, tasks, and logs models
-- local device pairing code API
-- WebSocket device heartbeat endpoint
-- local Python CLI agent prototype
-- local read-only workspace authorization and safe file-tree indexing
+The repository may be rebuilt from source according to the current commercial
+plan. Existing Bairui prototype code under `bairui-platform/` is treated as
+reference material, not as the final product boundary.
 
-Quick start:
+Keep or migrate only what helps the new platform:
 
-```powershell
-cd bairui-platform
-copy .env.example .env
-docker compose up --build
+- user registration and login;
+- plan and subscription models;
+- quotas;
+- device/server pairing;
+- WebSocket heartbeat;
+- audit events;
+- local agent prototype ideas;
+- Docker Compose development pattern.
+
+Replace or redesign:
+
+- Bairui branding;
+- assistant-hosting-first positioning;
+- old docs that make Hermes only one optional runtime;
+- route names that do not match MOXI commercial delivery;
+- any demo-only flow that cannot become customer delivery.
+
+## Product Role
+
+`MOXI-cloud-agent` owns:
+
+- official website;
+- product pages;
+- customer console;
+- admin console;
+- plans and subscriptions;
+- license generation;
+- deployment wizard;
+- server registration;
+- server heartbeat summaries;
+- version and release management;
+- support tickets;
+- diagnostic bundle uploads;
+- managed deployment operations.
+
+`MOXI-cloud-agent` does not own:
+
+- Hermes runtime internals;
+- customer business chat content;
+- customer Obsidian vault content;
+- third-party model API keys;
+- customer connector tokens;
+- direct unrestricted shell control of servers.
+
+## Three-Pillar Architecture
+
+```text
+Customer / Sales
+  -> MOXI Website
+  -> Customer Console
+  -> License / Deployment Wizard
+  -> VPS or VM
+  -> Docker Compose
+  -> Hermes Agent OS
+  -> Health Summary Back To Platform
+  -> Support / Renewal / Upgrade
 ```
 
-Local development:
+## Repository Direction
 
-```powershell
-cd bairui-platform
-.\.venv\Scripts\python manage.py check
-.\.venv\Scripts\python manage.py test assistants
-.\.venv\Scripts\python -m unittest bairui_agent.tests
+Target structure:
+
+```text
+MOXI-cloud-agent/
+  apps/
+    web/                 # website, customer console, admin console
+  packages/
+    db/                  # platform database schema
+    license/             # license generation and verification helpers
+    server-protocol/     # server heartbeat and deployment protocol
+    ui/                  # shared UI components
+  server-agent/
+    installer/
+    agent/
+    systemd/
+  infra/
+    docker/
+    nginx/
+    scripts/
+  docs/
+    00-platform-rebuild-plan.md
+    01-server-management-plan.md
+    02-license-and-deployment-flow.md
+    03-hermes-platform-contract.md
+  legacy/
+    bairui-platform/     # optional migration target if we archive old code
 ```
 
-See `bairui-platform/README.md` and `bairui-platform/docs/` for the current Bairui Cloud Agent architecture and development plan.
+The current `bairui-platform/` directory can either be migrated gradually or
+archived before a clean rebuild.
 
----
-# MOXI Server Agent
+## Recommended Technical Direction
 
-MOXI Server Agent 是 MOXI 生态的服务器管理代理方案。目标不是魔改 Linux 内核，而是在稳定的 Ubuntu / Debian / OpenCloudOS 基础上，做一个“开机即接入主控”的服务器镜像和 Agent。
+Commercial platform:
 
-这样新服务器创建后，Agent 自动启动并注册到 MOXI 主控后台，后续可以统一完成部署、监控、日志、备份、安全巡检和服务更新。
+- Next.js;
+- TypeScript;
+- PostgreSQL;
+- Prisma or Drizzle;
+- Tailwind CSS;
+- shadcn/ui;
+- Auth.js or equivalent auth layer;
+- Docker Compose;
+- GitHub Actions;
+- Playwright.
 
-## 核心定位
+Server management:
 
-- 自建服务器统一管理
-- MOXI / WarmStudy / Hermes 等服务的一键部署与运维
-- 自定义云镜像预装 Agent
-- 主控后台集中查看服务器状态
-- 为未来“托管部署服务”打基础，而不是直接做高风险裸服务器出租
+- VPS or VM per formal customer;
+- Docker Compose inside each customer VM;
+- outbound server heartbeat;
+- no public unauthenticated control port;
+- white-listed server actions only;
+- diagnostic bundle upload only after customer action;
+- no customer business data uploaded by default.
 
-## 推荐路线
+The existing Django prototype may still be useful if we decide speed is more
+important than frontend velocity, but the recommended long-term customer
+platform is a typed web platform with a strong UI and deployment wizard.
 
-1. 安装脚本：新服务器执行一条命令，自动安装 Docker、Nginx、安全组件和 Agent。
-2. cloud-init：购买云服务器时填入初始化脚本，开机自动接入。
-3. 自定义镜像：把安装好 Agent 的系统保存成镜像，以后直接基于镜像开机器。
-4. 主控平台：在 MOXI 管理端或独立运维后台管理所有服务器。
+## Existing Prototype Inventory
 
-## Agent 能力
+Existing useful code:
 
-- 服务器状态：CPU、内存、磁盘、网络、负载。
-- 服务管理：Docker 容器、Compose 项目、Nginx、systemd 服务。
-- 部署任务：拉取 GitHub 代码、构建镜像、滚动重启、健康检查。
-- 安全巡检：SSH 配置、防火墙、Fail2ban、异常登录、危险端口。
-- 日志与报警：容器日志、系统日志、异常事件、资源阈值报警。
-- 备份任务：数据库、配置文件、上传目录、定时快照。
+- `bairui-platform/` Django + DRF backend;
+- user/password and email-code login;
+- plan, subscription, quota, storage, task, log, and memory models;
+- device pairing API;
+- WebSocket heartbeat endpoint;
+- local CLI agent prototype;
+- Docker Compose for Postgres, Redis, web, and worker.
 
-## 设计原则
+Existing docs:
 
-- 不在仓库保存密钥、服务器 IP、私钥、数据库密码。
-- Agent 不开放公网管理端口，默认主动连接主控。
-- 每台服务器使用独立 token，泄露后可单独吊销。
-- 指令白名单化，避免主控变成任意远程命令执行入口。
-- 所有关键操作要写审计日志。
-- 代理管理员不能接触底层服务器权限。
+- [Server Agent Architecture](docs/architecture.md)
+- [Security Boundary](docs/security.md)
+- [Roadmap](docs/roadmap.md)
+- [Commercial Platform Rebuild Plan](docs/00-platform-rebuild-plan.md)
+- [Server Management Plan](docs/01-server-management-plan.md)
 
-## 文档
+## Immediate Next Steps
 
-- [架构设计](docs/architecture.md)
-- [安全边界](docs/security.md)
-- [实施路线图](docs/roadmap.md)
-
-## 当前状态
-
-这是第一版方案仓库，先记录架构、边界和实施步骤。后续再逐步加入 Agent 程序、主控 API、安装脚本和镜像构建流程。
-
+1. Decide whether to archive `bairui-platform/` or migrate pieces from it.
+2. Create the new platform skeleton.
+3. Build license, customer organization, server registration, and deployment
+   wizard first.
+4. Keep Hermes as a separate deployable product.
+5. Add server heartbeat contract between Hermes/customer VM and platform.
+6. Prepare the first customer trial flow before adding full online payment.
