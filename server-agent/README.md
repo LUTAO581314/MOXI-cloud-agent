@@ -26,3 +26,32 @@ Forbidden in the first commercial version:
 
 Formal customer deployments should use VPS or VM isolation with Docker Compose
 inside the customer environment.
+
+## P0 Outbound Heartbeat
+
+The first runnable agent cycle is implemented in `server-agent/index.mjs`.
+
+It performs one safe outbound reporting cycle:
+
+```text
+Hermes GET /platform/heartbeat
+  -> validate heartbeat with packages/server-protocol
+  -> POST heartbeat to bairui platform
+```
+
+Environment variables:
+
+- `BAIRUI_HERMES_HEARTBEAT_URL`: defaults to `http://127.0.0.1:8787/platform/heartbeat`.
+- `BAIRUI_PLATFORM_HEARTBEAT_URL`: required platform receive endpoint.
+- `BAIRUI_SERVER_AGENT_TOKEN`: optional bearer token issued by the platform.
+- `BAIRUI_SERVER_AGENT_TIMEOUT_MS`: request timeout, default `10000`.
+
+Run one report cycle:
+
+```sh
+npm run server-agent:once
+```
+
+The agent reports only operational metadata already exposed by Hermes heartbeat.
+It does not upload prompts, chat history, files, Obsidian note bodies, memory
+content, passwords, private keys, or model and connector secrets.
