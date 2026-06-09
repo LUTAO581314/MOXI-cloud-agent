@@ -54,6 +54,40 @@ Hermes may report:
 - error count;
 - last seen time.
 
+### 3.1 P0 Heartbeat Contract
+
+The P0 heartbeat is implemented in `packages/server-protocol`.
+
+Current protocol version:
+
+```text
+2026-06-10.p0
+```
+
+Payload:
+
+```json
+{
+  "protocol_version": "2026-06-10.p0",
+  "server_id": "srv_xxx",
+  "organization_id": "org_xxx",
+  "license_id": "lic_xxx",
+  "license_status": "valid",
+  "hermes_version": "0.1.0",
+  "health_status": "ok",
+  "database_status": "ready",
+  "backup_status": "not_configured",
+  "connector_status_summary": {},
+  "error_count_24h": 0,
+  "brand_key": "bairui",
+  "created_at": "2026-06-10T00:00:00.000Z"
+}
+```
+
+The platform must validate this payload before storing server state. The
+customer server should send it outbound to the platform; the platform must not
+require an unauthenticated inbound control port on the customer server.
+
 ## 4. Default Data Boundary
 
 Hermes must not upload by default:
