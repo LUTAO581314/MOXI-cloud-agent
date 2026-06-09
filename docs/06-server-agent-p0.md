@@ -71,3 +71,15 @@ GET  /api/servers
 For P0, the registry is stored as local JSON through
 `apps/web/server-registry.mjs`. This keeps the protocol testable before the
 PostgreSQL schema and migrations are introduced.
+
+## 7. PostgreSQL Target
+
+The PostgreSQL target schema lives in `packages/db/schema.mjs` and starts with:
+
+- `organizations`
+- `licenses`
+- `customer_servers`
+- `server_heartbeats`
+
+The JSON registry remains a local development fallback. Commercial deployments
+should use PostgreSQL once the platform storage adapter is connected.
