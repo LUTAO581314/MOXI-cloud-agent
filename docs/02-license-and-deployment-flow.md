@@ -88,3 +88,19 @@ It installs Node dependencies, optionally runs `npm run db:migrate` when
 `BAIRUI_PLATFORM_DATABASE_URL` is configured, runs tests, and prepares the
 systemd unit template. Set `BAIRUI_INSTALL_SYSTEMD=1` on a prepared Linux server
 to install and restart the `bairui-platform` service.
+
+## 6. Customer Hermes Deployment Bundle
+
+The platform can generate the P0 customer deployment bundle:
+
+```sh
+npm run deployment:bundle:print -- \
+  --organization-id=org_demo \
+  --license-id=lic_demo \
+  --server-id=srv_demo \
+  --platform-url=https://platform.example.com
+```
+
+The bundle includes Hermes environment values, server-agent outbound heartbeat
+values, and operator/customer instructions. It must not include production
+model keys, connector tokens, SSH keys, or customer business data.

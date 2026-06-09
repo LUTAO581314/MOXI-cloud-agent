@@ -11,6 +11,7 @@
     "deploy:check": "node --test infra/platform/scripts/check-deploy-assets.mjs",
     "db:migrate": "node packages/db/bin/migrate.mjs",
     "db:migration:print": "node packages/db/bin/print-migration.mjs",
+    "deployment:bundle:print": "node packages/deployment/bin/print-bundle.mjs",
     "platform:dev": "node apps/web/server.mjs",
     "server-agent:once": "node server-agent/index.mjs",
     "license:generate": "node packages/license/bin/generate-license.mjs"

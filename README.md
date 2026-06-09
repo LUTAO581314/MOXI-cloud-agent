@@ -84,6 +84,7 @@ MOXI-cloud-agent/
     web/                 # website, customer console, admin console
   packages/
     db/                  # platform database schema
+    deployment/          # customer deployment bundle generation
     license/             # license generation and verification helpers
     server-protocol/     # server heartbeat and deployment protocol
     ui/                  # shared UI components
@@ -146,6 +147,12 @@ sh infra/platform/scripts/deploy-platform.sh
 For production, copy `infra/platform/env.example` to a protected server path
 such as `/etc/bairui/platform.env`, set real values, then run the script with
 `BAIRUI_INSTALL_SYSTEMD=1` as root to install the systemd service.
+
+Generate a customer Hermes deployment bundle:
+
+```sh
+npm run deployment:bundle:print -- --organization-id=org_demo --license-id=lic_demo --server-id=srv_demo --platform-url=https://platform.example.com
+```
 
 ## Immediate Next Steps
 
