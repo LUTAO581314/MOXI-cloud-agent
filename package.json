@@ -1,0 +1,10 @@
+{
+  "name": "moxi-cloud-agent",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "license:generate": "node packages/license/bin/generate-license.mjs"
+  }
+}
