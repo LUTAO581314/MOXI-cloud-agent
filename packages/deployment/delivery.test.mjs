@@ -22,16 +22,20 @@ test("builds signed customer delivery package", () => {
   assert.match(deliveryPackage.files["hermes.env"], /MOXI_SERVER_ID=srv_1/);
   assert.match(deliveryPackage.files["server-agent.env"], /BAIRUI_SERVER_AGENT_TOKEN=token-ref/);
   assert.match(deliveryPackage.files["instructions.md"], /bairui Hermes Customer Deployment/);
+  assert.match(deliveryPackage.files["manifest.json"], /"manifest_version"/);
 });
 
 test("writes customer delivery package files", async () => {
   const outputDir = await mkdtemp(join(tmpdir(), "bairui-delivery-"));
   try {
     const result = await writeCustomerDeliveryPackage({ ...options, outputDir });
-    assert.deepEqual(result.files.sort(), ["hermes-license.json", "hermes.env", "instructions.md", "server-agent.env"].sort());
+    assert.deepEqual(result.files.sort(), ["hermes-license.json", "hermes.env", "instructions.md", "manifest.json", "server-agent.env"].sort());
 
     const license = JSON.parse(await readFile(join(outputDir, "hermes-license.json"), "utf8"));
+    const manifest = JSON.parse(await readFile(join(outputDir, "manifest.json"), "utf8"));
     assert.equal(verifyLicensePayload(license, "secret").status, "valid");
+    assert.equal(manifest.license_id, "lic_1");
+    assert.equal(manifest.files["hermes.env"].sha256.length, 64);
     assert.match(await readFile(join(outputDir, "hermes.env"), "utf8"), /BAIRUI_LICENSE_SECRET=license-secret-ref/);
   } finally {
     await rm(outputDir, { recursive: true, force: true });

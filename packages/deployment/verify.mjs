@@ -1,8 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { verifyLicensePayload } from "../license/index.mjs";
+import { sha256Hex } from "./manifest.mjs";
 
-const REQUIRED_FILES = ["hermes-license.json", "hermes.env", "server-agent.env", "instructions.md"];
+const REQUIRED_FILES = ["hermes-license.json", "hermes.env", "server-agent.env", "instructions.md", "manifest.json"];
 const REQUIRED_HERMES_ENV = [
   "BAIRUI_PRODUCT_NAME",
   "BAIRUI_BRAND_KEY",
@@ -87,15 +88,42 @@ export async function verifyCustomerDeliveryPackage(options) {
   }
 
   let license = {};
+  let manifest = {};
   try {
     license = JSON.parse(files["hermes-license.json"]);
   } catch {
     errors.push("hermes-license.json is not valid JSON");
   }
+  try {
+    manifest = JSON.parse(files["manifest.json"]);
+  } catch {
+    errors.push("manifest.json is not valid JSON");
+  }
 
   const licenseState = verifyLicensePayload(license, licenseSecret);
   if (licenseState.status !== "valid") {
     errors.push(`license is ${licenseState.status}: ${licenseState.error}`);
+  }
+  if (manifest.brand_key !== "bairui") {
+    errors.push("manifest.json brand_key must be bairui");
+  }
+  if (manifest.license_id && license.license_id && manifest.license_id !== license.license_id) {
+    errors.push("manifest.json license_id does not match license");
+  }
+  if (manifest.organization_id && license.organization_id && manifest.organization_id !== license.organization_id) {
+    errors.push("manifest.json organization_id does not match license");
+  }
+  for (const [fileName, metadata] of Object.entries(manifest.files ?? {})) {
+    if (fileName === "manifest.json") {
+      continue;
+    }
+    if (!files[fileName]) {
+      errors.push(`manifest references missing file: ${fileName}`);
+      continue;
+    }
+    if (metadata.sha256 !== sha256Hex(files[fileName])) {
+      errors.push(`manifest hash mismatch: ${fileName}`);
+    }
   }
 
   const hermesEnv = parseEnv(files["hermes.env"]);
@@ -134,6 +162,7 @@ export async function verifyCustomerDeliveryPackage(options) {
     warnings,
     license_id: license.license_id ?? "",
     organization_id: license.organization_id ?? "",
-    server_id: hermesEnv.MOXI_SERVER_ID ?? ""
+    server_id: hermesEnv.MOXI_SERVER_ID ?? "",
+    manifest_version: manifest.manifest_version ?? ""
   };
 }

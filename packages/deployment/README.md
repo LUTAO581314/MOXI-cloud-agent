@@ -9,6 +9,7 @@ It generates:
 - server-agent outbound heartbeat environment file content.
 - customer/operator deployment instructions.
 - signed license JSON when `delivery.mjs` is used.
+- `manifest.json` with file hashes and delivery identity metadata.
 
 The package does not generate or store real secrets. Production secrets must be
 created by the platform secret service or operator workflow and injected as

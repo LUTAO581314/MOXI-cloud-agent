@@ -116,6 +116,9 @@ BAIRUI_LICENSE_SECRET=change-me npm run delivery:write -- \
   --out=./tmp/delivery/org_demo-srv_demo
 ```
 
+The package includes `manifest.json` with file hashes, organization id,
+license id, server id, platform URL, generation time, and manifest version.
+
 Verify before sending:
 
 ```sh

@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { signLicense } from "../license/index.mjs";
 import { buildCustomerDeploymentBundle } from "./index.mjs";
+import { buildDeliveryManifest } from "./manifest.mjs";
 
 function requireString(options, key) {
   const value = options[key];
@@ -50,15 +51,23 @@ export function buildCustomerDeliveryPackage(options) {
     serverAgentTokenRef: options.serverAgentTokenRef ?? "SET_ON_CUSTOMER_SERVER"
   });
 
-  return {
-    license,
-    files: {
-      "hermes-license.json": `${JSON.stringify(license, null, 2)}\n`,
-      "hermes.env": bundle.hermesEnv,
-      "server-agent.env": bundle.serverAgentEnv,
-      "instructions.md": bundle.instructions
-    }
+  const files = {
+    "hermes-license.json": `${JSON.stringify(license, null, 2)}\n`,
+    "hermes.env": bundle.hermesEnv,
+    "server-agent.env": bundle.serverAgentEnv,
+    "instructions.md": bundle.instructions
   };
+  const manifest = buildDeliveryManifest({
+    organizationId,
+    licenseId,
+    serverId,
+    platformBaseUrl,
+    generatedAt: options.generatedAt,
+    files
+  });
+  files["manifest.json"] = `${JSON.stringify(manifest, null, 2)}\n`;
+
+  return { license, manifest, files };
 }
 
 export async function writeCustomerDeliveryPackage(options) {
@@ -72,6 +81,7 @@ export async function writeCustomerDeliveryPackage(options) {
     outputDir,
     files: Object.keys(deliveryPackage.files),
     license_id: deliveryPackage.license.license_id,
-    organization_id: deliveryPackage.license.organization_id
+    organization_id: deliveryPackage.license.organization_id,
+    manifest_version: deliveryPackage.manifest.manifest_version
   };
 }

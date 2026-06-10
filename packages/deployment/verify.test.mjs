@@ -57,6 +57,19 @@ test("rejects delivery package with invalid heartbeat URL", async () => {
     });
     assert.equal(result.valid, false);
     assert.ok(result.errors.includes("server-agent.env BAIRUI_HERMES_HEARTBEAT_URL must be http(s) URL"));
+    assert.ok(result.errors.includes("manifest hash mismatch: server-agent.env"));
+  });
+});
+
+test("rejects delivery package with tampered manifest file hash", async () => {
+  await withPackage(async (inputDir) => {
+    await writeFile(join(inputDir, "hermes.env"), "BAIRUI_BRAND_KEY=bairui\n");
+    const result = await verifyCustomerDeliveryPackage({
+      inputDir,
+      licenseSecret: "secret"
+    });
+    assert.equal(result.valid, false);
+    assert.ok(result.errors.includes("manifest hash mismatch: hermes.env"));
   });
 });
 
