@@ -147,6 +147,9 @@ sh infra/platform/scripts/deploy-platform.sh
 For production, copy `infra/platform/env.example` to a protected server path
 such as `/etc/bairui/platform.env`, set real values, then run the script with
 `BAIRUI_INSTALL_SYSTEMD=1` as root to install the systemd service.
+When `BAIRUI_PLATFORM_DATABASE_URL` is set, the script runs `npm run db:migrate`
+by default. Keep `BAIRUI_RUN_MIGRATIONS=1` for server rebuilds so PostgreSQL
+tables such as `server_acceptance_reports` are created before the API starts.
 
 Generate a customer Hermes deployment bundle:
 

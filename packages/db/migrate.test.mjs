@@ -25,6 +25,7 @@ test("runs migration SQL against injected pool", async () => {
   assert.equal(calls.length, 1);
   assert.match(calls[0], /create table if not exists customer_servers/);
   assert.match(calls[0], /create table if not exists server_heartbeats/);
+  assert.match(calls[0], /create table if not exists server_acceptance_reports/);
 });
 
 test("does not close injected pool", async () => {
