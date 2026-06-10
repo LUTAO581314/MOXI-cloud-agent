@@ -147,3 +147,13 @@ BAIRUI_LICENSE_SECRET=change-me npm run delivery:release -- \
   --platform-url=https://platform.example.com \
   --out=./tmp/delivery/org_demo-srv_demo
 ```
+
+After the customer server is configured and Hermes is running, execute the
+acceptance check on the customer server:
+
+```sh
+npm run server-agent:acceptance
+```
+
+Save the JSON report with the archive `sha256` in the customer acceptance and
+support records.

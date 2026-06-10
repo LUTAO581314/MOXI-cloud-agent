@@ -85,6 +85,7 @@ export function buildDeploymentInstructions(options) {
     "sudo editor /etc/bairui/server-agent.env",
     "sh infra/hermes/scripts/deploy-hermes.sh",
     "npm run server-agent:once",
+    "npm run server-agent:acceptance",
     "```",
     "",
     "## Acceptance Checks",

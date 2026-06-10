@@ -32,6 +32,21 @@ server-agent/index.mjs
 npm run server-agent:once
 ```
 
+Run the customer-server acceptance check after deployment:
+
+```sh
+npm run server-agent:acceptance
+```
+
+The command prints a JSON report with three checks:
+
+- `hermes_heartbeat`;
+- `platform_heartbeat_report`;
+- `platform_server_registry`.
+
+The report is accepted only when Hermes exposes a valid heartbeat, the platform
+accepts the outbound heartbeat, and the platform registry lists the same server.
+
 ## 4. Security Boundary
 
 The agent must not:

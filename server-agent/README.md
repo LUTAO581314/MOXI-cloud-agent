@@ -52,6 +52,16 @@ Run one report cycle:
 npm run server-agent:once
 ```
 
+Run the assisted deployment acceptance check:
+
+```sh
+npm run server-agent:acceptance
+```
+
+The acceptance command checks Hermes heartbeat, posts the heartbeat to the
+platform, then confirms `GET /api/servers` contains the same server id. It
+prints a JSON report and exits non-zero when any check fails.
+
 The agent reports only operational metadata already exposed by Hermes heartbeat.
 It does not upload prompts, chat history, files, Obsidian note bodies, memory
 content, passwords, private keys, or model and connector secrets.

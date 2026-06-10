@@ -178,6 +178,13 @@ Run the full release flow:
 BAIRUI_LICENSE_SECRET=change-me npm run delivery:release -- --organization-id=org_demo --license-id=lic_demo --server-id=srv_demo --platform-url=https://platform.example.com --out=./tmp/delivery/org_demo-srv_demo
 ```
 
+Run customer-server acceptance after Hermes and server-agent environment files
+are installed:
+
+```sh
+npm run server-agent:acceptance
+```
+
 ## Immediate Next Steps
 
 1. Create the new platform skeleton under `apps/web`.
