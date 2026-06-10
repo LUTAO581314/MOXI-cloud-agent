@@ -41,6 +41,15 @@ metadata, and support workflows.
 
 Customer-facing brand, trademark, and logo fields must default to `bairui`.
 
+The Hermes runtime may use mature open-source projects directly when that is
+the safer product path. That does not change this repository boundary:
+third-party runtime source stays in `hermes-` or an explicit runtime/vendor
+location, while `MOXI-cloud-agent` owns platform productization and operations.
+
+Commercialization is a quality bar. It requires clean deployment, readiness,
+tests, attribution, license clarity, and support workflows; it does not require
+blank-slate AI rewrites of complex runtime internals.
+
 ## 4. Commercial Readiness Rule
 
 A feature is not commercially ready until it has:

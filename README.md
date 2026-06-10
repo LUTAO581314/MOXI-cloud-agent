@@ -13,6 +13,13 @@ The repository is being rebuilt from source according to the current commercial
 plan. Historical prototype code has been removed from the active tree.
 Future code must follow the boundaries in this README and `docs/`.
 
+Commercialization is a quality target, not a requirement to invent every
+runtime component from zero. Hermes may use mature open-source runtime code as
+source-level product substrate when the license and architecture fit. This
+platform remains the commercial control plane around that runtime: website,
+license, deployment, server management, readiness, acceptance evidence, and
+support workflow.
+
 Default customer-facing brand fields:
 
 - brand key: `bairui`;

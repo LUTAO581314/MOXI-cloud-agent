@@ -4,6 +4,15 @@ This document defines the boundary between Hermes and MOXI-cloud-agent.
 
 ## 1. Ownership
 
+Commercialization means production-grade delivery, not blank-slate runtime
+reinvention. Hermes may be built from mature upstream source code as long as
+licenses, notices, attribution, and runtime boundaries are preserved.
+
+The platform contract stays ours even when Hermes integrates upstream runtime
+code: license packaging, server identity, health reporting, acceptance
+evidence, deployment scripts, readiness checks, and support operations must
+remain stable and bairui-branded.
+
 Hermes owns:
 
 - Agent runtime;
