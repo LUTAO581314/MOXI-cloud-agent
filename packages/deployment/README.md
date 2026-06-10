@@ -32,3 +32,14 @@ Verify a customer delivery package before sending it:
 BAIRUI_LICENSE_SECRET=change-me npm run delivery:verify -- \
   --in=./tmp/delivery/org_demo-srv_demo
 ```
+
+Archive a verified package:
+
+```sh
+npm run delivery:archive -- \
+  --in=./tmp/delivery/org_demo-srv_demo \
+  --out=./tmp/delivery/org_demo-srv_demo.tar.gz
+```
+
+The command returns the archive `sha256` for customer acceptance and support
+records.

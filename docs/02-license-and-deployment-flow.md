@@ -125,3 +125,14 @@ Verify before sending:
 BAIRUI_LICENSE_SECRET=change-me npm run delivery:verify -- \
   --in=./tmp/delivery/org_demo-srv_demo
 ```
+
+Archive after verification:
+
+```sh
+npm run delivery:archive -- \
+  --in=./tmp/delivery/org_demo-srv_demo \
+  --out=./tmp/delivery/org_demo-srv_demo.tar.gz
+```
+
+Record the returned archive `sha256` in the customer acceptance and support
+records.

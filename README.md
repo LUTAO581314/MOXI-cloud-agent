@@ -166,6 +166,12 @@ Verify a customer delivery package:
 BAIRUI_LICENSE_SECRET=change-me npm run delivery:verify -- --in=./tmp/delivery/org_demo-srv_demo
 ```
 
+Archive a customer delivery package:
+
+```sh
+npm run delivery:archive -- --in=./tmp/delivery/org_demo-srv_demo --out=./tmp/delivery/org_demo-srv_demo.tar.gz
+```
+
 ## Immediate Next Steps
 
 1. Create the new platform skeleton under `apps/web`.
