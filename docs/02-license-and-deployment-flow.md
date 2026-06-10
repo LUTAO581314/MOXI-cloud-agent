@@ -115,3 +115,10 @@ BAIRUI_LICENSE_SECRET=change-me npm run delivery:write -- \
   --platform-url=https://platform.example.com \
   --out=./tmp/delivery/org_demo-srv_demo
 ```
+
+Verify before sending:
+
+```sh
+BAIRUI_LICENSE_SECRET=change-me npm run delivery:verify -- \
+  --in=./tmp/delivery/org_demo-srv_demo
+```
