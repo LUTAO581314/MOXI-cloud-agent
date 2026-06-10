@@ -154,6 +154,12 @@ Generate a customer Hermes deployment bundle:
 npm run deployment:bundle:print -- --organization-id=org_demo --license-id=lic_demo --server-id=srv_demo --platform-url=https://platform.example.com
 ```
 
+Write a customer delivery package:
+
+```sh
+BAIRUI_LICENSE_SECRET=change-me npm run delivery:write -- --organization-id=org_demo --license-id=lic_demo --server-id=srv_demo --platform-url=https://platform.example.com --out=./tmp/delivery/org_demo-srv_demo
+```
+
 ## Immediate Next Steps
 
 1. Create the new platform skeleton under `apps/web`.

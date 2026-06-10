@@ -104,3 +104,14 @@ npm run deployment:bundle:print -- \
 The bundle includes Hermes environment values, server-agent outbound heartbeat
 values, and operator/customer instructions. It must not include production
 model keys, connector tokens, SSH keys, or customer business data.
+
+To write a full delivery package with signed license JSON:
+
+```sh
+BAIRUI_LICENSE_SECRET=change-me npm run delivery:write -- \
+  --organization-id=org_demo \
+  --license-id=lic_demo \
+  --server-id=srv_demo \
+  --platform-url=https://platform.example.com \
+  --out=./tmp/delivery/org_demo-srv_demo
+```
