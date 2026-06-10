@@ -15,6 +15,7 @@
     "delivery:write": "node packages/deployment/bin/write-delivery.mjs",
     "delivery:verify": "node packages/deployment/bin/verify-delivery.mjs",
     "delivery:archive": "node packages/deployment/bin/archive-delivery.mjs",
+    "delivery:release": "node packages/deployment/bin/release-delivery.mjs",
     "platform:dev": "node apps/web/server.mjs",
     "server-agent:once": "node server-agent/index.mjs",
     "license:generate": "node packages/license/bin/generate-license.mjs"

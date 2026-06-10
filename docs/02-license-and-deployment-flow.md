@@ -136,3 +136,14 @@ npm run delivery:archive -- \
 
 Record the returned archive `sha256` in the customer acceptance and support
 records.
+
+For the complete release flow:
+
+```sh
+BAIRUI_LICENSE_SECRET=change-me npm run delivery:release -- \
+  --organization-id=org_demo \
+  --license-id=lic_demo \
+  --server-id=srv_demo \
+  --platform-url=https://platform.example.com \
+  --out=./tmp/delivery/org_demo-srv_demo
+```

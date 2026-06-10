@@ -43,3 +43,17 @@ npm run delivery:archive -- \
 
 The command returns the archive `sha256` for customer acceptance and support
 records.
+
+Run the full release flow in one command:
+
+```sh
+BAIRUI_LICENSE_SECRET=change-me npm run delivery:release -- \
+  --organization-id=org_demo \
+  --license-id=lic_demo \
+  --server-id=srv_demo \
+  --platform-url=https://platform.example.com \
+  --out=./tmp/delivery/org_demo-srv_demo
+```
+
+This writes the package directory, verifies it, creates the `.tar.gz`, and
+prints the archive `sha256`.
