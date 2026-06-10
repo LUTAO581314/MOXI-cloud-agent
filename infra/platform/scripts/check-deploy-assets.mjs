@@ -12,9 +12,14 @@ test("platform deployment assets avoid real secrets and expose required commands
   assert.match(envExample, /BAIRUI_PLATFORM_DATABASE_URL=/);
   assert.match(envExample, /change-me/);
   assert.match(envExample, /BAIRUI_RUN_MIGRATIONS=1/);
+  assert.match(envExample, /BAIRUI_WAIT_READY=1/);
+  assert.match(envExample, /BAIRUI_PLATFORM_READY_URL=http:\/\/127\.0\.0\.1:8788\/ready/);
   assert.match(deployScript, /npm ci|npm install/);
   assert.match(deployScript, /npm run db:migrate/);
   assert.match(deployScript, /RUN_MIGRATIONS=\$\{BAIRUI_RUN_MIGRATIONS:-1\}/);
+  assert.match(deployScript, /WAIT_READY=\$\{BAIRUI_WAIT_READY:-\$INSTALL_SYSTEMD\}/);
+  assert.match(deployScript, /waiting for platform readiness/);
+  assert.match(deployScript, /fetch\(process\.argv\[1\]\)/);
   assert.match(deployScript, /npm test/);
   assert.match(migrationSql, /create table if not exists server_acceptance_reports/);
   assert.match(migrationSql, /idx_server_acceptance_reports_server_received/);
